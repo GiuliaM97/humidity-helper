@@ -1,7 +1,5 @@
-import {fetchWeatherApi} from "openmeteo";
-
 const apiKey = "58d3142bb5b645cfa0993302262405";
-const baseURL = "http://api.weatherapi.com/v1";
+const baseURL = "https://api.weatherapi.com/v1";
 
 
 

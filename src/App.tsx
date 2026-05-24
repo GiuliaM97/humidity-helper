@@ -5,11 +5,11 @@ function App() {
   const [temp, setTemp] = useState<number | null>(null);
   const [humidity, setHumidity] = useState<number | null>(null);
   const [dewPoint, setDewPoint] = useState<number | null>(null);
-  const [homeTemp, setHomeTemp] = useState<number | null>(0);
-  const [homeHumidity, setHomeHumidity] = useState<number | null>(0);
+  const [homeTemp, setHomeTemp] = useState<number>(0);
+  const [homeHumidity, setHomeHumidity] = useState<number>(0);
   const [resultScore, setResultScore] = useState<number | null>(null);
-  const [needleX2, setNeedleX2] = useState<number | null>(100);
-  const [needleY2, setNeedleY2] = useState<number | null>(35);
+  const [needleX2, setNeedleX2] = useState<number>(100);
+  const [needleY2, setNeedleY2] = useState<number>(35);
 
   useEffect(() => {
     async function loadWeather() {
@@ -27,6 +27,11 @@ function App() {
   }, [])
 
   function computeResult() {
+
+    if (temp === null || humidity === null || dewPoint === null) {
+      return;
+    }
+
     const a = 17.27;
     const b = 237.3;
 
@@ -60,6 +65,9 @@ function App() {
   }
 
   function getVentilationMessage() {
+    if (resultScore === null) {
+      return "Errore nei calcoli!";
+    }
     if (resultScore <= 3) {
       return "Le finestre dovrebbero restare chiuse";
     }
@@ -91,9 +99,9 @@ function App() {
 
         <div>
           <div>Temperatura (°C):</div>
-          <input type={"number"} value={homeTemp} onChange={e => {setHomeTemp(e.target.value)}} />
+          <input type={"number"} value={homeTemp} onChange={e => {setHomeTemp(Number(e.target.value))}} />
           <div>Umidità (%):</div>
-          <input type={"number"} value={homeHumidity} onChange={e => {setHomeHumidity(e.target.value)}} />
+          <input type={"number"} value={homeHumidity} onChange={e => {setHomeHumidity(Number(e.target.value))}} />
         </div>
 
         <button onClick={computeResult}>Calcola</button>
